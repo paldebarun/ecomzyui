@@ -58,14 +58,14 @@ import { useUser } from "@clerk/clerk-react";
    
     {item ? (
       <div className='w-screen h-auto relative  flex flex-col items-center'>
-      <div className='w-full h-auto p-[50px] flex justify-center items-center'>
-      <img src={item.image} alt="productimage" className='w-[300px] h-[300px] ' />
+      <div className='w-full h-auto p-[70px] sm:p-[50px] flex justify-center items-center'>
+      <img src={item.image} alt="productimage" className='sm:w-[300px] sm:h-[300px] ' />
       </div>
       
      <div className='flex p-3 flex-col items-center gap-[50px]'>
 
      <div className='text-slate-500'>{item.title}</div>
-      <div className='w-10/12 text-center'>{item.description}</div>
+      <div className='w-10/12 text-center text-[12px] sm:text-md'>{item.description}</div>
 
      </div>
       
