@@ -59,7 +59,7 @@ import { useUser } from "@clerk/clerk-react";
     {item ? (
       <div className='w-screen h-auto relative  flex flex-col items-center'>
       <div className='w-full h-auto p-[70px] sm:p-[50px] flex justify-center items-center'>
-      <img src={item.image} alt="productimage" className='sm:w-[300px] sm:h-[300px] ' />
+      <img src={item.image} alt="productimage" className='sm:w-[300px] sm:h-[250px] ' />
       </div>
       
      <div className='flex p-3 flex-col items-center gap-[50px]'>
