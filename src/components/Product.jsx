@@ -1,12 +1,28 @@
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import {removeFromCartAsync,addToCartAsync} from "../redux/Slices/CartSlice";
+import { useState } from 'react';
 
 const Product = ({post,setincart,user_id}) => {
 
   const {cart} = useSelector((state) => state);
   const dispatch = useDispatch();
+  const [showFullPrice, setShowFullPrice] = useState(false);
 
+  const formatPrice = (price) => {
+    const magnitudes = ['', 'K', 'M', 'B', 'T', 'Q', 'QQ', 'S', 'SS', 'OC', 'N', 'D', 'UN', 'DD'];
+    let magnitudeIndex = 0;
+  
+    while (price >= 1000 && magnitudeIndex < magnitudes.length - 1) {
+      price /= 1000;
+      magnitudeIndex++;
+    }
+  
+    const formatted = `₹ ${price.toFixed(1)}${magnitudes[magnitudeIndex]}`;
+    const full = `₹ ${price} ${magnitudes[magnitudeIndex] === '' ? '' : '(' + magnitudes[magnitudeIndex] + ')'} `;
+  
+    return { formatted, full };
+  };
 
 const addToCart = async (event) => {
     event.stopPropagation();
@@ -42,13 +58,13 @@ const removeFromCart = async (event) => {
     }
   };
   
-  
+  const { formatted, full } = formatPrice(post.price);
   
   
 
   return (
     <div className="flex w-[300px] sm:w-[400px] h-[400px] flex-col items-center hover:cursor-pointer justify-between 
-    hover:scale-110  transition duration-300 ease-in gap-3 p-4 mt-10 mx-auto rounded-xl outline">
+    sm:hover:scale-110  transition duration-300 ease-in gap-3 p-4 mt-10 mx-auto rounded-xl outline">
       <div>
         <p className="text-gray-700 font-semibold text-lg text-left truncate w-40 mt-1">{post.title}</p>
       </div>
@@ -60,8 +76,15 @@ const removeFromCart = async (event) => {
       </div>
 
       <div className="flex justify-between gap-12 items-center w-full mt-5">
-        <div>
-          <p className="text-green-600 font-semibold">₹ {post.price}</p>
+      <div>
+          <p
+            className="text-green-600 font-semibold"
+            title={showFullPrice ? full : null}
+            onMouseEnter={() => setShowFullPrice(true)}
+            onMouseLeave={() => setShowFullPrice(false)}
+          >
+            {formatted}
+          </p>
         </div>
         
         {
