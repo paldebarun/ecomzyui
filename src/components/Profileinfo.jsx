@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-
+import React, { useState,useEffect } from 'react'
+import axios from 'axios'
+import { useUser } from "@clerk/clerk-react";
 
 
 const Profileinfo = () => {
@@ -8,6 +9,7 @@ const Profileinfo = () => {
    
    const [editemail,seteditemail]=useState(false);
    
+   const {user}=useUser();
    
    const [nameform,setnameform]=useState({
     firstname:"",
@@ -18,6 +20,20 @@ const Profileinfo = () => {
    const  [emailform,setemailform]=useState({
     email:""
    })
+   
+   useEffect(() => {
+     
+     const getnamesdata=async ()=>{
+        
+      try {
+        const response = await axios.post('https://ecomzyserver4.onrender.com/api/v1/getprofileinfonames', { user: user.id });
+        console.log("this is response : ", response.data);
+     } catch (error) {
+        console.error("Error fetching data:", error);
+     }
+     }
+     getnamesdata();
+   }, [])
    
    
    const handlenameonchange=(event)=>{
