@@ -8,6 +8,11 @@ const Profileinfo = () => {
    const [editname,seteditname]=useState(false);
    
    const [editemail,seteditemail]=useState(false);
+
+   const [firstname,setfirstname]=useState('');
+   const [lastname,setlastname]=useState('');
+   const [email,setemail]=useState('');
+  
    
    const {user}=useUser();
    
@@ -23,17 +28,66 @@ const Profileinfo = () => {
    
    useEffect(() => {
      
-     const getnamesdata=async ()=>{
+     const getprofiledata=async ()=>{
         
       try {
         const response = await axios.post('https://ecomzyserver4.onrender.com/api/v1/getprofileinfonames', { user: user.id });
-        console.log("this is response : ", response.data);
+
+        const response_=await axios.post('https://ecomzyserver4.onrender.com/api/v1/getemaildata',{user:user.id});
+
+        console.log("this is response : ", response.data.profileInfo);
+        setemail(response_.data.emailData.email)
+        setfirstname(response.data.profileInfo.firstName);
+        setlastname(response.data.profileInfo.lastName);
+        
+        
+        setnameform({
+          firstname:"",
+    lastname:"",
+    gender:response.data.profileInfo.gender
+        })
+
+        
      } catch (error) {
         console.error("Error fetching data:", error);
      }
      }
-     getnamesdata();
-   }, [])
+
+     
+
+
+     getprofiledata();
+   }, []);
+
+
+   const submitNames=async ()=>{
+    try{
+      
+      const obj={
+       user:user.id,
+       firstName:nameform.firstname,
+       lastName:nameform.lastname,
+       gender:nameform.gender
+      }
+
+     const response=await axios.post('https://ecomzyserver4.onrender.com/api/v1/saveprofileinfoname',obj);
+
+     console.log("this is response : ",response);
+
+     setfirstname(nameform.firstname);
+     setlastname(nameform.lastname);
+
+     seteditname(false);
+
+
+    }
+    catch(error){
+
+      console.error("Error submitting names:", error);
+
+    }
+
+   }
    
    
    const handlenameonchange=(event)=>{
@@ -58,12 +112,30 @@ const Profileinfo = () => {
     console.log("email form : ",emailform);
    }
    
-   const namesubmithandler=()=>{
-    console.log("this is name form : ",nameform);
-  }
+   
 
-  const emailsubmithandler=()=>{
-    console.log("this is email form : ",emailform);
+  const emailsubmithandler= async()=>{
+    
+    try{
+      
+      const obj={
+        user:user.id,
+        email:emailform.email
+
+       }
+ 
+      const response=await axios.post('https://ecomzyserver4.onrender.com/api/v1/submitemail',obj);
+ 
+      console.log("this is response : ",response);
+ 
+      setemail(emailform.email)
+ 
+      seteditemail(false);
+       
+    }
+    catch(error){
+      console.error("Error submitting names:", error);
+    }
 
   }
 
@@ -81,12 +153,12 @@ const Profileinfo = () => {
      <div className='flex gap-[10px] md:flex-row flex-col lg:gap-[30px]'>
 
      {editname ?<input onChange={handlenameonchange} type="text" name="firstname" value={nameform.firstname} placeholder="First Name" className='border sm:w-7/12 md:w-[200px] lg:w-[250px] text-[10px] xs:text-xs md:text-md outline-none p-2 rounded-md'/>:<div className='md:w-[200px] lg:w-[250px] h-[40px] border rounded-md bg-slate-100 p-2 text-slate-400 flex justify-center'>
-        dummy text
+        {firstname}
      </div>}
 
-      {editname ?<input onChange={handlenameonchange} type="text" name="lastname" value={nameform.lastname} placeholder="Last Name" className='border sm:w-7/12 md:w-[200px] lg:w-[250px] text-[10px] xs:text-xs md:text-md outline-none p-2 rounded-md'/>:<div className='md:w-[200px] lg:w-[250px] h-[40px] border rounded-md bg-slate-100 text-slate-400 flex justify-center p-2'>dummy text</div>}
+      {editname ?<input onChange={handlenameonchange} type="text" name="lastname" value={nameform.lastname} placeholder="Last Name" className='border sm:w-7/12 md:w-[200px] lg:w-[250px] text-[10px] xs:text-xs md:text-md outline-none p-2 rounded-md'/>:<div className='md:w-[200px] lg:w-[250px] h-[40px] border rounded-md bg-slate-100 text-slate-400 flex justify-center p-2'>{lastname}</div>}
 
-      {editname ?<div onClick={namesubmithandler} className=' p-2 w-[70px] text-[10px] md:text-sm  md:w-[100px] flex justify-center text-white hover:cursor-pointer bg-blue-500 rounded-md'>Save
+      {editname ?<div onClick={submitNames} className=' p-2 w-[70px] text-[10px] md:text-sm  md:w-[100px] flex justify-center text-white hover:cursor-pointer bg-blue-500 rounded-md'>Save
       </div>:<div></div>}
      </div>
     {editname ? <div className='flex flex-col gap-[20px]'>
@@ -94,9 +166,9 @@ const Profileinfo = () => {
      
      <div className='flex gap-[10px] items-center' >
  
-     <input type="radio" onChange={handlenameonchange}    id="male" name="gender" value="male" />
+     <input type="radio" onChange={handlenameonchange} checked={nameform.gender === "male"}   id="male" name="gender" value="male" />
      <label for="male"  className='text-[10px] xs:text-xs sm:text-sm'>Male</label>
-     <input type="radio" onChange={handlenameonchange}  id="female" name="gender" value="female"/>
+     <input type="radio" onChange={handlenameonchange}  checked={nameform.gender === "female"}  id="female" name="gender" value="female"/>
      <label for="female" className='text-[10px] xs:text-xs sm:text-sm'>Female</label>
      </div>
      </div>:<div></div>}
@@ -109,7 +181,7 @@ const Profileinfo = () => {
     </div>
      
      <div className='flex gap-[10px] flex-col md:flex-row md:gap-[30px]'>
-     { editemail ?<input onChange={handleremailonchange} name="email" value={emailform.email} type="email" className='outline-none border sm:w-7/12 md:w-[200px] text-[10px] xs:text-xs md:text-md lg:w-[250px] p-2 rounded-md' placeholder="Email Adress" />:<div className='md:w-[200px] lg:w-[250px] h-[40px] border rounded-md bg-slate-100 p-2 text-slate-400 flex justify-center'>dummy text</div>
+     { editemail ?<input onChange={handleremailonchange} name="email" value={emailform.email} type="email" className='outline-none border sm:w-7/12 md:w-[200px] text-[10px] xs:text-xs md:text-md lg:w-[250px] p-2 rounded-md' placeholder="Email Adress" />:<div className='md:w-[200px] lg:w-[250px] h-[40px] border rounded-md bg-slate-100 p-2 text-slate-400 flex justify-center'>{email}</div>
     }
     {editemail ?<div onClick={emailsubmithandler} className='p-2 w-[70px] text-[10px] md:text-sm  md:w-[100px] flex justify-center text-white bg-blue-500 hover:cursor-pointer rounded-md'>Save
       </div>:<div></div>}

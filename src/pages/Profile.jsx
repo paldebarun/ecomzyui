@@ -16,11 +16,12 @@ import { useNavigate } from 'react-router-dom'
 const Profile = () => {
  const {user}=useUser();
 
+
  
 
- const userName=user.firstName;
+ const [userName,setusername]=useState(user ? user.firstName:"");
 
-
+ 
 
  const [profleInfo,setprofileinfo]=useState(true);
 
@@ -72,7 +73,7 @@ const Profile = () => {
       <img src={mydp} className='md:w-[50px] w-[30px] h-[30px]  md:h-[50px] rounded-full '/>
       <span className='flex flex-col'>
       <div className='lg:text-[15px] md:text-sm text-xs'>Hello, </div>
-      <div className='lg:text-[15px] md:text-sm text-xs text-slate-400'>{userName}</div>
+      <div className='lg:text-[15px] md:text-sm text-xs text-slate-400'>{userName ? userName :""}</div>
       </span>
     </div>
 
