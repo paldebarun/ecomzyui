@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { BiCurrentLocation } from 'react-icons/bi';
 import indianStates from '../../src/Constants/Statename';
+import axios from 'axios';
+import { useUser } from "@clerk/clerk-react";
+
 
 export const ManageAddress = () => {
+
+
+   const {user}=useUser();
+
   const [form, setForm] = useState({
+    user:user.id,
     name: '',
     mobilenumber: '',
     pincode: '',
@@ -13,11 +21,11 @@ export const ManageAddress = () => {
     state: '',
     landmark: '',
     altphone: '',
-    addresstype: 'Home',
+    addresstype: '',
     latitude: null,
     longitude: null,
   });
-
+  
   const [loader ,setloader]=useState(false);
 
   const handleLiveLocation = () => {
@@ -94,10 +102,20 @@ export const ManageAddress = () => {
   };
   
 
-  const submit = (event) => {
-   
+  const submit = async (event) => {
+   try{
+
+    setloader(true);
     console.log('This is the final form:', form);
-   
+    
+    const response=await axios.post('https://ecomzyserver4.onrender.com/api/v1/addAddress',form);
+
+    console.log("this is the response of address ",response);
+
+
+  
+
+
     setForm({
       name: '',
       mobilenumber: '',
@@ -112,6 +130,13 @@ export const ManageAddress = () => {
       latitude: null,
       longitude: null,
     });
+
+    setloader(false);
+  }
+  catch(error){
+     console.log("this is the error : ",error);
+     setloader(false);
+  }
   };
 
   const handleOnChange = (event) => {
@@ -271,12 +296,12 @@ export const ManageAddress = () => {
 
         <div className="flex flex-row gap-[5px] sm:gap-[10px] md:gap-[20px]">
           <div
-            className="w-[70px] sm:w-[100px] md:w-[150px] text-[10px] sm:text-sm md:text-xl md:p-3 bg-blue-500 text-white flex justify-center items-center rounded-sm"
+            className="w-[70px] hover:cursor-pointer sm:w-[100px] md:w-[150px] text-[10px] sm:text-sm md:text-xl md:p-3 bg-blue-500 text-white flex justify-center items-center rounded-sm"
             onClick={submit}
           >
             Save
           </div>
-          <div className="text-blue-500 p-3 text-[10px] sm:text-sm md:text-xl w-[70px] sm:w-[100px] md:w-[150px] text-center">
+          <div className="text-blue-500 hover:cursor-pointer p-3 text-[10px] sm:text-sm md:text-xl w-[70px] sm:w-[100px] md:w-[150px] text-center">
             Cancel
           </div>
         </div>

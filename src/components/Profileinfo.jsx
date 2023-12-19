@@ -6,7 +6,7 @@ import { useUser } from "@clerk/clerk-react";
 const Profileinfo = () => {
    
    const [editname,seteditname]=useState(false);
-   
+   const [loading,setloading]=useState(false);
    const [editemail,seteditemail]=useState(false);
 
    const [firstname,setfirstname]=useState('');
@@ -31,6 +31,7 @@ const Profileinfo = () => {
      const getprofiledata=async ()=>{
         
       try {
+        setloading(true);
         const response = await axios.post('https://ecomzyserver4.onrender.com/api/v1/getprofileinfonames', { user: user.id });
 
         const response_=await axios.post('https://ecomzyserver4.onrender.com/api/v1/getemaildata',{user:user.id});
@@ -46,7 +47,8 @@ const Profileinfo = () => {
     lastname:"",
     gender:response.data.profileInfo.gender
         })
-
+      
+        setloading(false);
         
      } catch (error) {
         console.error("Error fetching data:", error);
@@ -62,14 +64,14 @@ const Profileinfo = () => {
 
    const submitNames=async ()=>{
     try{
-      
+      setloading(true);
       const obj={
        user:user.id,
        firstName:nameform.firstname,
        lastName:nameform.lastname,
        gender:nameform.gender
       }
-
+     
      const response=await axios.post('https://ecomzyserver4.onrender.com/api/v1/saveprofileinfoname',obj);
 
      console.log("this is response : ",response);
@@ -78,7 +80,8 @@ const Profileinfo = () => {
      setlastname(nameform.lastname);
 
      seteditname(false);
-
+    
+     setloading(false);
 
     }
     catch(error){
@@ -117,7 +120,7 @@ const Profileinfo = () => {
   const emailsubmithandler= async()=>{
     
     try{
-      
+      setloading(true);
       const obj={
         user:user.id,
         email:emailform.email
@@ -131,7 +134,7 @@ const Profileinfo = () => {
       setemail(emailform.email)
  
       seteditemail(false);
-       
+      setloading(true);
     }
     catch(error){
       console.error("Error submitting names:", error);
@@ -140,7 +143,8 @@ const Profileinfo = () => {
   }
 
   return (
-    <div className='p-[20px] shadow-lg w-full lg:scale-100 md:scale-95 sm:scale-90    h-full flex flex-col gap-[30px] sm:gap-[60px] bg-white '>
+    <div className='p-[20px] relative  shadow-lg w-full lg:scale-100 md:scale-95 sm:scale-90    h-full flex flex-col gap-[30px] sm:gap-[60px] bg-white '>
+   {loading ? <div className='absolute bg-white top-0 left-0 w-full h-full opacity-80'></div>:<div></div>}
     <div className='flex flex-col gap-[20px] sm:gap-[50px]'>
     <div className='flex sm:flex-row flex-col  gap-[30px] md:gap-[30px] sm:items-center '>
     <div className='text-[10px] xs:text-xs sm:text-sm md:text-lg lg:text-xl'>Personal Information </div>
