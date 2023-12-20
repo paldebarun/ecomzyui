@@ -156,11 +156,11 @@ const Profileinfo = () => {
      
      <div className='flex gap-[10px] md:flex-row flex-col lg:gap-[30px]'>
 
-     {editname ?<input onChange={handlenameonchange} type="text" name="firstname" value={nameform.firstname} placeholder="First Name" className='border sm:w-7/12 md:w-[200px] lg:w-[250px] text-[10px] xs:text-xs md:text-md outline-none p-2 rounded-md'/>:<div className='md:w-[200px] lg:w-[250px] h-[40px] border rounded-md bg-slate-100 p-2 text-slate-400 flex justify-center'>
-        {firstname}
+     {editname ?<input onChange={handlenameonchange} type="text" name="firstname" value={nameform.firstname} placeholder="First Name" className='border sm:w-7/12 md:w-[200px] lg:w-[250px] text-[10px] xs:text-xs md:text-md outline-none p-2 rounded-md'/>:<div className='md:w-[200px] lg:w-[250px] h-[40px] text-[10px] sm:text-lg border rounded-md bg-slate-100 p-2 text-slate-400 flex justify-center'>
+     {firstname.length <= 12 ? firstname : `${firstname.substring(0, 12)}...`}
      </div>}
 
-      {editname ?<input onChange={handlenameonchange} type="text" name="lastname" value={nameform.lastname} placeholder="Last Name" className='border sm:w-7/12 md:w-[200px] lg:w-[250px] text-[10px] xs:text-xs md:text-md outline-none p-2 rounded-md'/>:<div className='md:w-[200px] lg:w-[250px] h-[40px] border rounded-md bg-slate-100 text-slate-400 flex justify-center p-2'>{lastname}</div>}
+      {editname ?<input onChange={handlenameonchange} type="text" name="lastname" value={nameform.lastname} placeholder="Last Name" className='border sm:w-7/12 md:w-[200px] lg:w-[250px] text-[10px] xs:text-xs md:text-md outline-none p-2 rounded-md'/>:<div className='md:w-[200px] lg:w-[250px] h-[40px] text-[10px] sm:text-lg border rounded-md bg-slate-100 text-slate-400 flex justify-center p-2'>{lastname.length <= 12 ? lastname : `${lastname.substring(0, 12)}...`}</div>}
 
       {editname ?<div onClick={submitNames} className=' p-2 w-[70px] text-[10px] md:text-sm  md:w-[100px] flex justify-center text-white hover:cursor-pointer bg-blue-500 rounded-md'>Save
       </div>:<div></div>}
@@ -185,7 +185,7 @@ const Profileinfo = () => {
     </div>
      
      <div className='flex gap-[10px] flex-col md:flex-row md:gap-[30px]'>
-     { editemail ?<input onChange={handleremailonchange} name="email" value={emailform.email} type="email" className='outline-none border sm:w-7/12 md:w-[200px] text-[10px] xs:text-xs md:text-md lg:w-[250px] p-2 rounded-md' placeholder="Email Adress" />:<div className='md:w-[200px] lg:w-[250px] h-[40px] border rounded-md bg-slate-100 p-2 text-slate-400 flex justify-center'>{email}</div>
+     { editemail ?<input onChange={handleremailonchange} name="email" value={emailform.email} type="email" className='outline-none border sm:w-7/12 md:w-[200px] text-[10px] xs:text-xs md:text-md lg:w-[250px] p-2 rounded-md' placeholder="Email Adress" />:<div className='md:w-[200px] lg:w-[250px] h-[40px] text-[10px] sm:text-md md:text-[15px] border rounded-md bg-slate-100 p-2 text-slate-400 flex justify-center'>{email.length <= 12 ? email : `${email.substring(0, 12)}...`}</div>
     }
     {editemail ?<div onClick={emailsubmithandler} className='p-2 w-[70px] text-[10px] md:text-sm  md:w-[100px] flex justify-center text-white bg-blue-500 hover:cursor-pointer rounded-md'>Save
       </div>:<div></div>}

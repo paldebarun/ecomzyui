@@ -10,25 +10,19 @@ import { setValue } from "../redux/Slices/CartSlice";
 
 
 
-const Home = ({ filterbox,setadmin }) => {
+const Home = ({ filterbox,setadmin,setLoading,loading }) => {
   const API_URL = "https://ecomzyserver4.onrender.com/api/v1/data";
-  const [loading, setLoading] = useState(false);
+  
   const [posts, setPosts] = useState([]);
   const [incart, setIncart] = useState(false);
   const { isSignedIn, user, isLoaded } = useUser();
   const [userId,setUserId]=useState(null);
   const {cart} = useSelector((state) => state);
   
- 
-
-  
-
-
   const dispatch=useDispatch();
   
-  
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     
     if (!isSignedIn) {

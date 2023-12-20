@@ -38,7 +38,7 @@ const [filterbox, setfilterbox] = useState(false);
 const location=useLocation();
 const inSignIn =location.pathname==='/sign-in';
 const indefault=location.pathname==='/';
-
+const [loading, setLoading] = useState(false);
 const [admin,setadmin]=useState(false);
 
 
@@ -52,18 +52,15 @@ return (
 
 <div className="bg-slate-900">
 
-   {(!inSignIn || !indefault ) &&
-      
+   {(!inSignIn || !indefault  ) && !loading &&
 
-     
-
-     <Navbar setfilterbox={setfilterbox} admin={admin}   filterbox={filterbox} />
+     <Navbar setfilterbox={setfilterbox} admin={admin}    filterbox={filterbox} />
      }
       </div>
        <Routes>
         <Route path='/' element={<DefaultPage/>} />
         <Route path='/createproduct' element={<CreateProduct/>} />
-        <Route path="/home" element={<Home setadmin={setadmin} filterbox={filterbox} />} />
+        <Route path="/home" element={<Home setLoading={setLoading} loading={loading} setadmin={setadmin} filterbox={filterbox} />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/product" element={<ProductPage />} />
         <Route path="/profile" element={<Profile />} />
