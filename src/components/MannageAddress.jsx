@@ -3,7 +3,7 @@ import { BiCurrentLocation } from 'react-icons/bi';
 import indianStates from '../../src/Constants/Statename';
 import axios from 'axios';
 import { useUser } from "@clerk/clerk-react";
-
+import {toast} from 'react-hot-toast'
 
 export const ManageAddress = () => {
 
@@ -104,6 +104,8 @@ export const ManageAddress = () => {
 
   const submit = async (event) => {
    try{
+    if(form.name && form.mobilenumber && form.pincode && form.locality && form.addresstype && form.address && form.altphone && form.state && form.landmark && form.city && form.altphone)
+    {
 
     setloader(true);
     console.log('This is the final form:', form);
@@ -111,10 +113,6 @@ export const ManageAddress = () => {
     const response=await axios.post('https://ecomzyserver4.onrender.com/api/v1/addAddress',form);
 
     console.log("this is the response of address ",response);
-
-
-  
-
 
     setForm({
       name: '',
@@ -132,6 +130,43 @@ export const ManageAddress = () => {
     });
 
     setloader(false);
+  }
+  else {
+
+    if(!form.name){
+      toast.error('enter the name');
+    }
+    if(!form.mobilenumber){
+      toast.error('enter the mobilenumber');
+    }
+    if(!form.pincode){
+      toast.error('enter the pincode');
+    }
+    if(!form.locality){
+      toast.error('enter the locality');
+    }
+    if(!form.address){
+      toast.error('enter the address');
+    }
+    if(!form.city){
+      toast.error('enter the city');
+    }
+    if(!form.state){
+      toast.error('enter the state');
+    }
+    if(!form.landmark){
+      toast.error('enter the landmark');
+    }
+    if(!form.altphone){
+      toast.error('enter the altphone');
+    }
+    if(!form.addresstype){
+      toast.error('enter the addresstype');
+    }
+    
+
+  }
+
   }
   catch(error){
      console.log("this is the error : ",error);

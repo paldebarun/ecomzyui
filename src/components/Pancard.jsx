@@ -63,7 +63,7 @@ const Pancard = () => {
   const submitform =async ()=>{
     try{
       
-      if(form.commitment){
+      if(form.commitment && form.cardnumber && form.fullname){
         setloading(true);
     const formData = new FormData();
       formData.append('imageFile', watchedFile);
@@ -92,7 +92,7 @@ const Pancard = () => {
       setloading(false);
     }
     else{
-      toast.error('kindly aggree to the terms and policy');
+      toast.error('kindly fill all the inputs');
     }
      
       setform({

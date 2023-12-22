@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import axios from 'axios'
 import { useUser } from "@clerk/clerk-react";
-
+import { toast } from 'react-hot-toast';
 
 const Profileinfo = () => {
    
@@ -64,6 +64,9 @@ const Profileinfo = () => {
 
    const submitNames=async ()=>{
     try{
+     
+      if(nameform.firstname && nameform.lastname && nameform.gender){
+      
       setloading(true);
       const obj={
        user:user.id,
@@ -84,6 +87,21 @@ const Profileinfo = () => {
      setloading(false);
 
     }
+
+    else{
+
+      if(!nameform.firstname){
+        toast.error('kindly fill firstname ');
+      }
+      if(!nameform.lastname){
+        toast.error('kindly fill lastname ');
+      }
+      if(!nameform.gender){
+        toast.error('kindly fill gender ');
+      }
+    }
+
+  }
     catch(error){
 
       console.error("Error submitting names:", error);
@@ -120,6 +138,8 @@ const Profileinfo = () => {
   const emailsubmithandler= async()=>{
     
     try{
+
+      if(emailform.email){
       setloading(true);
       const obj={
         user:user.id,
@@ -136,6 +156,10 @@ const Profileinfo = () => {
       seteditemail(false);
       setloading(true);
     }
+    else{
+      toast.error('kindly fill the email address');
+    }
+  }
     catch(error){
       console.error("Error submitting names:", error);
     }

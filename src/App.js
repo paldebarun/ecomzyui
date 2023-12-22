@@ -38,7 +38,7 @@ const [filterbox, setfilterbox] = useState(false);
 const location=useLocation();
 const inSignIn =location.pathname==='/sign-in';
 const indefault=location.pathname==='/';
-const [loading, setLoading] = useState(false);
+const [loading, setLoading] = useState(true);
 const [admin,setadmin]=useState(false);
 
 

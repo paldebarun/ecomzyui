@@ -2,10 +2,9 @@ import React, { useState,useEffect } from 'react'
 import mydp from '../../src/images/mydp.jpeg'
 import {ImFolderUpload} from 'react-icons/im'
 import {CgProfile} from 'react-icons/cg'
-import {MdAccountBalanceWallet} from 'react-icons/md'
+
 import {IoIosArrowForward} from 'react-icons/io'
-import {MdFolderShared} from 'react-icons/md'
-import {BsPower} from 'react-icons/bs'
+
 import Profileinfo from '../components/Profileinfo'
 import MannageAddress from '../components/MannageAddress'
 import Pancard from '../components/Pancard'
@@ -29,24 +28,7 @@ const Profile = () => {
 
  const [pancardinfo,setpancardinfo]=useState(false);
 
- const [savedcards,setsavedcards]=useState(false);
-
- const [savedupis,setsavedupis]=useState(false);
-
- const [coupans,setcoupans]=useState(false);
-
- const [review,setreview]=useState(false);
-
- const [notifications,setnotifications]=useState(false);
-
- const [wishlist,setwishlist]=useState(false);
-
- const [form,setform]=useState({
-        
-        
-         
-        
- });
+ 
 
  const {isSignedIn} =useUser();
 
@@ -98,13 +80,10 @@ const Profile = () => {
      <div className={profleInfo?'pl-[35px] sm:pl-[40px] md:pl-[47px] lg:px-[60px] text-[8px] lg:text-[15px]  py-[10px] bg-sky-100 hover:text-blue-500 hover:cursor-pointer ':'pl-[35px] sm:pl-[40px] md:pl-[47px] lg:px-[60px] text-[8px] lg:text-[15px]  py-[10px] hover:text-blue-500 hover:cursor-pointer hover:bg-sky-100'} onClick={()=>{
       setprofileinfo(true)
       setmanageaddresses(false);
-      setcoupans(false);
-      setnotifications(false);
+      
+      
       setpancardinfo(false);
-      setreview(false);
-      setsavedcards(false);
-      setsavedupis(false);
-      setwishlist(false);
+      
       
       }
       
@@ -114,13 +93,11 @@ const Profile = () => {
       setmanageaddresses(true)
       setprofileinfo(false)
      
-      setcoupans(false);
-      setnotifications(false);
+      
+     
       setpancardinfo(false);
-      setreview(false);
-      setsavedcards(false);
-      setsavedupis(false);
-      setwishlist(false);
+     
+     
      
      
      }}>Manage Address</div>
@@ -128,38 +105,22 @@ const Profile = () => {
        setmanageaddresses(false)
       setprofileinfo(false)
      
-      setcoupans(false);
-      setnotifications(false);
+      
+     
       setpancardinfo(true);
-      setreview(false);
-      setsavedcards(false);
-      setsavedupis(false);
-      setwishlist(false);
+      
+     
      
      
      
      }}>PAN Card Information</div>
      <div className='h-[1px] bg-slate-300'></div>
 
-     <div className='flex gap-[10px] md:gap-[20px] items-center p-3'>
-      <MdAccountBalanceWallet className='lg:w-[30px] w-[15px] h-[12px] lg:h-[30px] text-blue-500' />
-      <div className='text-slate-400 text-[8px] lg:text-[15px]'>PAYMENTS</div>
-     </div>
-
-     <div className='pl-[35px] sm:pl-[40px] md:pl-[47px] lg:px-[60px] text-[8px] lg:text-[15px] py-[10px] hover:text-blue-500 hover:cursor-pointer hover:bg-sky-100' onClick={()=>{setsavedcards(true)}}>Saved Cards</div>
-     <div className='pl-[35px] sm:pl-[40px] md:pl-[47px] lg:px-[60px] text-[8px] lg:text-[15px] py-[10px] hover:text-blue-500 hover:cursor-pointer hover:bg-sky-100' onClick={()=>{setsavedupis(true)}}>Saved UPIs</div>
+     
 
      <div className='h-[1px] bg-slate-300'></div>
 
-     <div className='flex gap-[10px] md:gap-[20px] items-center p-3'>
-      <MdFolderShared className='lg:w-[30px] w-[15px] h-[12px] lg:h-[30px] text-blue-500' />
-      <div className='text-slate-400 text-[8px] lg:text-[15px]'>MY STUFFS</div>
-     </div>
-
      
-     <div className='pl-[35px] sm:pl-[40px] md:pl-[47px] lg:px-[60px] text-[8px] lg:text-[15px] py-[10px] hover:text-blue-500 hover:cursor-pointer hover:bg-sky-100' onClick={()=>{setreview(true)}}>My Reviews & Ratings</div>
-     <div className='pl-[35px] sm:pl-[40px] md:pl-[47px] lg:px-[60px] text-[8px] lg:text-[15px] py-[10px] hover:text-blue-500 hover:cursor-pointer hover:bg-sky-100' onClick={()=>{setnotifications(true)}}>All Notifications</div>
-     <div className='pl-[35px] sm:pl-[40px] md:pl-[47px] lg:px-[60px] text-[8px] lg:text-[15px] py-[10px] hover:text-blue-500 hover:cursor-pointer hover:bg-sky-100' onClick={()=>{setwishlist(true)}}>My Wishlist</div>
      
      <div className='h-[1px]  bg-slate-300'></div>
      

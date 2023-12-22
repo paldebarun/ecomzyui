@@ -9,6 +9,7 @@ import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 
+
 const CreateProduct = () => {
   const { register, handleSubmit, setValue, reset, watch } = useForm();
   const [imageUrlPreview, setImageUrlPreview] = useState(null);
@@ -31,6 +32,7 @@ const CreateProduct = () => {
 
   const onSubmit = async(data) => {
     try{
+      if(data.category && data.description && data.price && data.title && data.url && user.id){
       setLoading(true);
     console.log(data);
     console.log("this is the user id : ",user.id);
@@ -50,6 +52,12 @@ const CreateProduct = () => {
 
     toast.success("product is uploaded");
     setLoading(false);
+
+      }
+    else{
+      toast.error('kindly fill all the details properly');
+    }
+
 
   }
   catch(error){
@@ -76,7 +84,7 @@ const CreateProduct = () => {
         'https://ecomzyserver4.onrender.com/api/v1/uploadImage',
         formData,  
       );
-
+      
       setLoading(false);
       console.log('Image uploaded to Cloudinary:', response);
       const url = response.data.imageUrl;
@@ -158,12 +166,14 @@ const CreateProduct = () => {
         </div>
 
         <input {...register('title')} type='text' placeholder='Title' className='p-2 text-center outline-none border rounded-md' />
-        <input {...register('description')} type='text' placeholder='Description' className='text-center p-2 h-[100px] outline-none border rounded-md' />
-        <input {...register('price')} type='number' placeholder='Price' className='p-2 w-6/12 text-center outline-none border mx-auto rounded-md' />
 
+        <input {...register('description')} type='text' placeholder='Description' className='text-center p-2 h-[100px] outline-none border rounded-md' />
+        
+        <input {...register('price')} type='number' placeholder='Price' className='p-2 w-6/12 text-center outline-none border mx-auto rounded-md' />
+        
         <label htmlFor='category' className='text-center flex gap-[10px] items-center p-2'>
           <div>Category:</div>
-
+         
           <select
             id='category'
             {...register('category')}
