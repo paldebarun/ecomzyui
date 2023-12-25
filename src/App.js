@@ -7,7 +7,7 @@ import Profile from "./pages/Profile";
 import  DefaultPage  from "./pages/DefaultPage";
 import { useState,useEffect } from "react";
 import CreateProduct from "./pages/CreateProduct";
-
+import {motion,useScroll,useSpring} from 'framer-motion'
 
 import {
   ClerkProvider,
@@ -40,9 +40,8 @@ const inSignIn =location.pathname==='/sign-in';
 const indefault=location.pathname==='/';
 const [loading, setLoading] = useState(true);
 const [admin,setadmin]=useState(false);
-
-
-
+const {scrollYProgress}=useScroll();
+  const scalex=useSpring(scrollYProgress);
 
 return (
 
@@ -51,10 +50,20 @@ return (
 
 
 <div className="bg-slate-900">
+<motion.div 
+      style={{
+        scaleX:scalex,
+        transformOrigin:'left',
+        position:"fixed",
+        top:0
+        }} 
+        
+        className="w-full h-[7px] sticky z-20  bg-blue-400">
 
+      </motion.div>
    {(!inSignIn || !indefault  ) && !loading &&
 
-     <Navbar setfilterbox={setfilterbox} admin={admin}    filterbox={filterbox} />
+     <Navbar  setfilterbox={setfilterbox} admin={admin}    filterbox={filterbox} />
      }
       </div>
        <Routes>

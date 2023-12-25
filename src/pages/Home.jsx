@@ -10,9 +10,12 @@ import { setValue } from "../redux/Slices/CartSlice";
 
 
 
+
 const Home = ({ filterbox,setadmin,setLoading,loading }) => {
   const API_URL = "https://ecomzyserver4.onrender.com/api/v1/data";
   
+  
+
   const [posts, setPosts] = useState([]);
   const [incart, setIncart] = useState(false);
   const { isSignedIn, user, isLoaded } = useUser();
@@ -210,7 +213,7 @@ const Home = ({ filterbox,setadmin,setLoading,loading }) => {
         <Spinner />
       ) : posts.length > 0 ? (
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="posts">
+          <Droppable  droppableId="posts">
             {(provided) => (
               <div
                 {...provided.droppableProps}
@@ -218,7 +221,7 @@ const Home = ({ filterbox,setadmin,setLoading,loading }) => {
                 className="grid relative item-center justify-center sm:grid-cols-1  lg:grid-cols-2  w-full p-2 mx-auto gap-[20px] h-auto"
               >
                 {posts.map((post, index) => (
-                  <Draggable  key={post._id.toString()} draggableId={post._id.toString()} index={index}>
+                  <Draggable   key={post._id.toString()} draggableId={post._id.toString()} index={index}>
                     {(provided) => (
                       <div
                         ref={provided.innerRef}
@@ -226,7 +229,7 @@ const Home = ({ filterbox,setadmin,setLoading,loading }) => {
                         {...provided.dragHandleProps}
                         onClick={() => handleItemClick(post)}
                       >
-                        <Product  user_id={userId} post={post} setincart={setIncart} />
+                        <Product   user_id={userId} post={post} setincart={setIncart} />
                       </div>
                     )}
                   </Draggable>

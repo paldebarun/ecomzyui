@@ -1,9 +1,15 @@
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import {removeFromCartAsync,addToCartAsync} from "../redux/Slices/CartSlice";
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 const Product = ({post,setincart,user_id}) => {
+  
+  useEffect(() => {
+    AOS.init({duration:1500});
+  }, []);
 
   const {cart} = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -64,7 +70,7 @@ const removeFromCart = async (event) => {
 
   return (
     <div className="flex w-[300px] sm:w-[400px] h-[400px] flex-col items-center hover:cursor-pointer justify-between 
-    sm:hover:scale-110  transition duration-300 ease-in gap-3 p-4 mt-10 mx-auto rounded-xl outline">
+    sm:hover:scale-110  transition duration-300 ease-in gap-3 p-4 mt-10 mx-auto rounded-xl outline" data-aos="flip-right">
       <div>
         <p className="text-gray-700 font-semibold text-lg text-left truncate w-40 mt-1">{post.title}</p>
       </div>

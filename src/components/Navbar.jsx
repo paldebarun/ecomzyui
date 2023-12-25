@@ -9,8 +9,9 @@ import { useLocation } from "react-router-dom";
 import {AiFillFolderAdd} from 'react-icons/ai'
 import { UserButton,useUser } from "@clerk/clerk-react";
 
+  
 const Navbar = ({setfilterbox,filterbox,admin}) => {
-
+  
   const {cart} = useSelector((state) => state);
   const location = useLocation();
   const isHomePage = location.pathname === "/home";
@@ -21,9 +22,8 @@ const Navbar = ({setfilterbox,filterbox,admin}) => {
   const {isSignedIn}=useUser();
   
   
- 
   
-
+  
   return (
     <div >
 
@@ -96,6 +96,7 @@ const Navbar = ({setfilterbox,filterbox,admin}) => {
 
           </div>
       </nav>
+      
     </div>
   )
 };
