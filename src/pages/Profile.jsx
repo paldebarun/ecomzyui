@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import mydp from '../../src/images/mydp.jpeg'
+
 import {ImFolderUpload} from 'react-icons/im'
 import {CgProfile} from 'react-icons/cg'
 
@@ -16,11 +16,12 @@ const Profile = () => {
  const {user}=useUser();
 
 
+ console.log("this is user : ",user);
  
-
+ const [mydp,setmydp]=useState(user ? user.imageUrl:"");
  const [userName,setusername]=useState(user ? user.firstName:"");
-
  
+
 
  const [profleInfo,setprofileinfo]=useState(true);
 
@@ -52,7 +53,8 @@ const Profile = () => {
     <div className='flex scale-x-90 sm:scale-100 w-[130px] sm:w-[150px] md:w-[200px] lg:w-[300px] gap-[30px] flex-col'>
    
     <div className='bg-white w-full p-1 sm:p-3 items-center shadow-lg  flex  gap-[20px] '>
-      <img src={mydp} className='md:w-[50px] w-[30px] h-[30px]  md:h-[50px] rounded-full '/>
+    {mydp ? <img src={mydp } className='md:w-[50px] w-[30px] h-[30px]  md:h-[50px] rounded-full '/>:<CgProfile className='md:w-[50px] w-[30px] h-[30px]  md:h-[50px]'/>}
+      
       <span className='flex flex-col'>
       <div className='lg:text-[15px] md:text-sm text-xs'>Hello, </div>
       <div className='lg:text-[15px] md:text-sm text-xs text-slate-400'>{userName ? userName :""}</div>

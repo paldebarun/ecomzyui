@@ -21,7 +21,7 @@ const Home = ({ filterbox,setadmin,setLoading,loading }) => {
   const { isSignedIn, user, isLoaded } = useUser();
   const [userId,setUserId]=useState(null);
   const {cart} = useSelector((state) => state);
-  
+  console.log("this is user : ",user);
   const dispatch=useDispatch();
   
   const navigate = useNavigate();

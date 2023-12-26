@@ -51,6 +51,7 @@ const Profileinfo = () => {
         setloading(false);
         
      } catch (error) {
+      setloading(false);
         console.error("Error fetching data:", error);
      }
      }
@@ -100,10 +101,11 @@ const Profileinfo = () => {
         toast.error('kindly fill gender ');
       }
     }
+    setloading(false);
 
   }
     catch(error){
-
+      setloading(false);
       console.error("Error submitting names:", error);
 
     }
@@ -154,13 +156,15 @@ const Profileinfo = () => {
       setemail(emailform.email)
  
       seteditemail(false);
-      setloading(true);
+      setloading(false);
     }
     else{
+      
       toast.error('kindly fill the email address');
     }
   }
     catch(error){
+      setloading(false);
       console.error("Error submitting names:", error);
     }
 
