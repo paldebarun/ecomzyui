@@ -1,17 +1,38 @@
 
-import { useDispatch } from "react-redux";
-import { remove } from "../redux/Slices/CartSlice";
 import { toast } from "react-hot-toast";
 import {AiTwotoneDelete} from 'react-icons/ai'
+import { useDispatch, useSelector } from "react-redux";
+import {removeFromCartAsync} from "../redux/Slices/CartSlice";
 
-const CartItem = ({item}) => {
+
+
+const CartItem = ({item,user_id}) => {
+  const {cart} = useSelector((state) => state);
   const dispatch = useDispatch();
+  // const [loading,setloading]=useState(false);
 
-  const removeFromCart = (event) => {
+
+  const removeFromCart = async (event) => {
     event.stopPropagation();
-    dispatch(remove(item.id));
-    toast.success("Item Removed");
-  }
+    const toastid=toast.loading("loading"); 
+    try {
+    
+     console.log("this is toast id : ",toastid);
+     console.log("this is product id ",item._id);
+      dispatch(removeFromCartAsync(item._id, user_id));
+      // setincart(false);
+      toast.error("Item removed from Cart");
+      console.log("this is cart : ",cart);
+
+      toast.dismiss(toastid);
+    }
+    catch (error) {
+      toast.dismiss(toastid);
+      toast.error("error occured");
+      console.error("Error removing from cart:", error.message);
+
+    }
+  };
 
   return (
     <div className=" w-[300px] h-[500px] sm:w-[500px] sm:h-[600px] border hover:cursor-pointer hover:scale-105 transition-all duration-150 p-[30px] flex flex-col items-center justify-center  outline rounded-xl">

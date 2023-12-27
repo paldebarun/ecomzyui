@@ -104,7 +104,7 @@ const Cart = () => {
               onClick={() => handleItemClick(item)} 
             >
 
-             <CartItem  item={item} itemIndex={index} />
+             <CartItem user_id={user.id}  item={item} itemIndex={index} />
              </div>
            ) )
         }

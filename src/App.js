@@ -7,7 +7,7 @@ import Profile from "./pages/Profile";
 import  DefaultPage  from "./pages/DefaultPage";
 import { useState,useEffect } from "react";
 import CreateProduct from "./pages/CreateProduct";
-import {motion,useScroll,useSpring} from 'framer-motion'
+import {motion,useScroll,useSpring,useMotionValueEvent} from 'framer-motion'
 
 import {
   ClerkProvider,
@@ -43,13 +43,27 @@ const [admin,setadmin]=useState(false);
 const {scrollYProgress}=useScroll();
   const scalex=useSpring(scrollYProgress);
 
+  const {scrollY}=useScroll();
+  const [hidden,sethidden]=useState(false);
+
+
+  useMotionValueEvent(scrollY,"change",(latest)=>{
+    const previous=scrollY.getPrevious();
+     
+    if(latest>previous ){
+      sethidden(true);
+    }
+    else{
+      sethidden(false);
+    }
+    
+  });
+
 return (
 
   
+
 <ClerkProvider publishableKey={clerkkey} navigate={(to)=>navigate(to)} >
-
-
-<div className="bg-slate-900">
 <motion.div 
       style={{
         scaleX:scalex,
@@ -61,15 +75,26 @@ return (
         className="w-full h-[7px] sticky z-20  bg-blue-400">
 
       </motion.div>
+
+<motion.div className="bg-slate-900 sticky"
+
+variants={{
+        visible:{y:0},
+        hidden:{y:"-100%"}
+      }}
+      animate={hidden ? "hidden":"visible"}
+      transition={{duration:0.35, ease:"easeInOut"}}
+>
+
    {(!inSignIn || !indefault  ) && !loading &&
 
      <Navbar  setfilterbox={setfilterbox} admin={admin}    filterbox={filterbox} />
      }
-      </div>
+      </motion.div>
        <Routes>
         <Route path='/' element={<DefaultPage/>} />
         <Route path='/createproduct' element={<CreateProduct/>} />
-        <Route path="/home" element={<Home setLoading={setLoading} loading={loading} setadmin={setadmin} filterbox={filterbox} />} />
+        <Route path="/home" element={<Home setfilterbox={setfilterbox} setLoading={setLoading} loading={loading} setadmin={setadmin} filterbox={filterbox} />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/product" element={<ProductPage />} />
         <Route path="/profile" element={<Profile />} />
@@ -94,7 +119,7 @@ return (
           element={
             <>
               <SignedIn>
-                <Home filterbox={filterbox}/>
+                <Home setfilterbox={setfilterbox} filterbox={filterbox}/>
               </SignedIn>
               <SignedOut>
                 <RedirectToSignIn />

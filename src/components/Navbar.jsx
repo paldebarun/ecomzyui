@@ -8,8 +8,9 @@ import {BsFilterRight} from 'react-icons/bs'
 import { useLocation } from "react-router-dom";
 import {AiFillFolderAdd} from 'react-icons/ai'
 import { UserButton,useUser } from "@clerk/clerk-react";
-
+// import { useRef,useEffect } from "react";
   
+
 const Navbar = ({setfilterbox,filterbox,admin}) => {
   
   const {cart} = useSelector((state) => state);
@@ -21,13 +22,20 @@ const Navbar = ({setfilterbox,filterbox,admin}) => {
   const inproductpage=location.pathname==='/product';
   const {isSignedIn}=useUser();
   
+
+
   
   
   
   return (
-    <div >
+    <div 
+    
+    
+    >
 
-      <nav className="flex    justify-between items-center h-20 w-full ">
+      <nav 
+      
+      className="flex    justify-between items-center h-20 w-full ">
         
         <NavLink to="/home" className='hover:scale-95 transition-all duration-200'>
           <div className="ml-5">
@@ -70,7 +78,7 @@ const Navbar = ({setfilterbox,filterbox,admin}) => {
             }
 
             {isHomePage && (
-            <BsFilterRight
+            <BsFilterRight 
               onClick={() => {
                 setfilterbox(!filterbox);
               }}

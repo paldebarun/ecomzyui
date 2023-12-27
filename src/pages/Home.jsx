@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef } from "react";
 import Spinner from "../components/Spinner";
 import Product from "../components/Product";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ import { setValue } from "../redux/Slices/CartSlice";
 
 
 
-const Home = ({ filterbox,setadmin,setLoading,loading }) => {
+const Home = ({ setfilterbox,filterbox,setadmin,setLoading,loading }) => {
   const API_URL = "https://ecomzyserver4.onrender.com/api/v1/data";
   
   
@@ -25,6 +25,25 @@ const Home = ({ filterbox,setadmin,setLoading,loading }) => {
   const dispatch=useDispatch();
   
   const navigate = useNavigate();
+
+  const filterIconRef = useRef(null);
+
+  
+  const handleClickOutside = (event) => {
+    if (filterIconRef.current && !filterIconRef.current.contains(event.target)) {
+      setfilterbox(false);
+    }
+  };
+
+  useEffect(() => {
+
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []); 
   
   useEffect(() => {
     
@@ -51,11 +70,13 @@ const Home = ({ filterbox,setadmin,setLoading,loading }) => {
       console.log("this is response:", res);
 
       setPosts(res.data.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log("Error occurred", error);
       setPosts([]);
     } finally {
-      
+      setLoading(false);
     }
   };
 
@@ -244,8 +265,8 @@ const Home = ({ filterbox,setadmin,setLoading,loading }) => {
           <p>No Data Found</p>
         </div>
       )}
-      {filterbox && (
-        <div className="absolute shadow-md w-[200px] h-[300px] bg-white rounded-md right-2 top-20 flex p-3 flex-col gap-[20px]">
+      {filterbox &&  (
+        <div ref={filterIconRef} className="absolute shadow-md w-[200px] h-[300px] bg-white rounded-md right-2 top-20 flex p-3 flex-col gap-[20px]">
           <div className="hover:bg-slate-900 hover:text-white rounded-md p-2 hover:cursor-pointer" onClick={()=>{handleCategoryChange("clothing")}}>Clothings</div>
           <div className="hover:bg-slate-900 hover:text-white rounded-md p-2 hover:cursor-pointer" onClick={()=>{handleCategoryChange("footware")}}>Footwares</div>
           <div className="hover:bg-slate-900 hover:text-white rounded-md p-2 hover:cursor-pointer" onClick={()=>{handleCategoryChange("accessories")}}>Accessories</div>
