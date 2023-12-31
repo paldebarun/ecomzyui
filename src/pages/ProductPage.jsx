@@ -1,22 +1,31 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { MdShoppingCart } from "react-icons/md";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import { toast } from "react-hot-toast";
 import {removeFromCartAsync,addToCartAsync} from "../redux/Slices/CartSlice";
 import { useUser } from "@clerk/clerk-react";
+import { buyCourse } from "../operations/paymentservice";
+
 
 
  const ProductPage = () => {
     const location = useLocation();
     const dispatch = useDispatch();
-    const {  user } = useUser();
+    const {  user,isSignedIn } = useUser();
     const navigate=useNavigate();
     const [item,setitem]=useState(location.state.item);
     const [incart,setincart]=useState(location.state.incart);
-    
+    const {cart} = useSelector((state) => state);
 
+    const handleBuyproduct = () => {
+        
+      if(isSignedIn) {
+          buyCourse( cart, user);
+          return;
+      }
+  }
 
     const addToCart = async (event) => {
       event.stopPropagation();
@@ -82,7 +91,7 @@ import { useUser } from "@clerk/clerk-react";
         <MdShoppingCart className='absolute right-[10px] sm:right-[20px] top-[10px] sm:top-[20px] transition-colors duration-200 hover:cursor-pointer w-[30px] h-[30px] hover:text-green-400' onClick={addToCart} />
       }
 
-      <div className='hover:bg-slate-400 border p-3 transition-colors duration-200 rounded-[22px] hover:text-white   hover:cursor-pointer'>
+      <div onClick={handleBuyproduct} className='hover:bg-slate-400 border p-3 transition-colors duration-200 rounded-[22px] hover:text-white   hover:cursor-pointer'>
         CheckOut
       </div>
      <div className=' m-4  border rounded-full p-4 hover:cursor-pointer hover:text-white hover:bg-slate-400 transition-colors duration-200' onClick={()=>{navigate('/cart')}}>got to cart</div>

@@ -8,7 +8,7 @@ import { useUser } from "@clerk/clerk-react";
 import axios from 'axios'
 import { setValue } from "../redux/Slices/CartSlice";
 import Spinner from "../components/Spinner";
-
+import { buyCourse } from "../operations/paymentservice";
 
 
 
@@ -70,6 +70,13 @@ const Cart = () => {
     navigate("/product", { state: { item, incart:true } });
   };
 
+  const handleBuyproduct = () => {
+        
+    if(isSignedIn) {
+        buyCourse( cart, user);
+        return;
+    }
+}
 
   useEffect( () => {
     setTotalAmount( cart.reduce( (acc, curr) => acc + curr.price,0) );
@@ -128,7 +135,7 @@ const Cart = () => {
 
         <div className="flex items-center xs:flex-row flex-col justify-center gap-[20px] xs:gap-[25px]">
           <p>Total Amount: ${totalAmount}</p>
-          <button className="p-2 hover:bg-slate-500 border transition-colors duration-200 rounded-[22px] hover:text-white">
+          <button onClick={handleBuyproduct} className="p-2 hover:bg-slate-500 border transition-colors duration-200 rounded-[22px] hover:text-white">
             CheckOut Now
           </button>
         </div>
