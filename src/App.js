@@ -9,6 +9,7 @@ import { useState,useEffect } from "react";
 import CreateProduct from "./pages/CreateProduct";
 import {motion,useScroll,useSpring,useMotionValueEvent} from 'framer-motion'
 
+
 import {
   ClerkProvider,
   SignedIn,
@@ -41,6 +42,9 @@ const indefault=location.pathname==='/';
 const [loading, setLoading] = useState(true);
 const [admin,setadmin]=useState(false);
 const {scrollYProgress}=useScroll();
+const [orders,setorders]=useState({});
+
+
   const scalex=useSpring(scrollYProgress);
 
   const {scrollY}=useScroll();
@@ -94,10 +98,10 @@ variants={{
        <Routes>
         <Route path='/' element={<DefaultPage/>} />
         <Route path='/createproduct' element={<CreateProduct/>} />
-        <Route path="/home" element={<Home setfilterbox={setfilterbox} setLoading={setLoading} loading={loading} setadmin={setadmin} filterbox={filterbox} />} />
+        <Route path="/home" element={<Home orders={orders} setorders={setorders} setfilterbox={setfilterbox} setLoading={setLoading}  loading={loading} setadmin={setadmin} filterbox={filterbox} />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/product" element={<ProductPage />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile"  element={<Profile orders={orders} />} />
         <Route
           path="/sign-in/*"
           element={

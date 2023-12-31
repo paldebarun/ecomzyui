@@ -11,7 +11,7 @@ import { setValue } from "../redux/Slices/CartSlice";
 
 
 
-const Home = ({ setfilterbox,filterbox,setadmin,setLoading,loading }) => {
+const Home = ({ orders,setorders,setfilterbox,filterbox,setadmin,setLoading,loading }) => {
   const API_URL = "https://ecomzyserver4.onrender.com/api/v1/data";
   
   
@@ -124,6 +124,14 @@ const Home = ({ setfilterbox,filterbox,setadmin,setLoading,loading }) => {
 
        
       fetchcartdata(userData);
+      
+      const ordersresponse=await axios.post('https://ecomzyserver4.onrender.com/api/v1/fetchorders',{user:userData.id});
+
+      console.log("this is order response ",ordersresponse.data.orderarray);
+
+      setorders(ordersresponse.data.orderarray);
+     
+      console.log("this is orders ",orders);
       
 
 

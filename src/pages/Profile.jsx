@@ -4,7 +4,7 @@ import {ImFolderUpload} from 'react-icons/im'
 import {CgProfile} from 'react-icons/cg'
 
 import {IoIosArrowForward} from 'react-icons/io'
-
+import Orderpage from '../components/Orderpage'
 import Profileinfo from '../components/Profileinfo'
 import MannageAddress from '../components/MannageAddress'
 import Pancard from '../components/Pancard'
@@ -12,7 +12,7 @@ import { useUser } from '@clerk/clerk-react'
 import { useNavigate } from 'react-router-dom'
 
 
-const Profile = () => {
+const Profile = ({orders}) => {
  const {user}=useUser();
 
 
@@ -21,7 +21,7 @@ const Profile = () => {
  const [mydp,setmydp]=useState(user ? user.imageUrl:"");
  const [userName,setusername]=useState(user ? user.firstName:"");
  
-
+ const [orderspage,setorderspage]=useState(false);
 
  const [profleInfo,setprofileinfo]=useState(true);
 
@@ -66,7 +66,17 @@ const Profile = () => {
      <div className='flex  gap-[12px] md:gap-[20px] items-center'>
      <ImFolderUpload className='lg:w-[30px] w-[15px] h-[12px] lg:h-[30px] text-blue-500' />
 
-    <div className='hover:text-blue-500 text-[8px] lg:text-[15px] text-slate-400 ' >MY ORDERS</div>
+    <div className='hover:text-blue-500 text-[8px] lg:text-[15px] text-slate-400 '
+    onClick={()=>{
+      setprofileinfo(false);
+      setmanageaddresses(false);
+      
+      setorderspage(true);
+      setpancardinfo(false);
+      
+      
+      }}
+     >MY ORDERS</div>
     </div>
 
     <IoIosArrowForward className='lg:w-[20px] w-[10px] h-[10px] lg:h-[20px]  text-slate-400' />
@@ -83,7 +93,7 @@ const Profile = () => {
       setprofileinfo(true)
       setmanageaddresses(false);
       
-      
+      setorderspage(false);
       setpancardinfo(false);
       
       
@@ -95,7 +105,7 @@ const Profile = () => {
       setmanageaddresses(true)
       setprofileinfo(false)
      
-      
+      setorderspage(false);
      
       setpancardinfo(false);
      
@@ -107,7 +117,7 @@ const Profile = () => {
        setmanageaddresses(false)
       setprofileinfo(false)
      
-      
+      setorderspage(false);
      
       setpancardinfo(true);
       
@@ -150,6 +160,15 @@ const Profile = () => {
         <Pancard />
       )
     }
+
+    {
+
+orderspage && (
+  <Orderpage orders={orders}/>
+)
+}
+
+
     </div>
     
 
