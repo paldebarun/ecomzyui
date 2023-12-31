@@ -92,7 +92,7 @@ import { buyCourse } from "../operations/paymentservice";
       }
 
       <div onClick={handleBuyproduct} className='hover:bg-slate-400 border p-3 transition-colors duration-200 rounded-[22px] hover:text-white   hover:cursor-pointer'>
-        CheckOut
+        Buy Now
       </div>
      <div className=' m-4  border rounded-full p-4 hover:cursor-pointer hover:text-white hover:bg-slate-400 transition-colors duration-200' onClick={()=>{navigate('/cart')}}>got to cart</div>
       </div>

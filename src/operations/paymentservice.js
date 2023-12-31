@@ -1,6 +1,6 @@
 import { toast } from "react-hot-toast";
 import axios from 'axios'
-
+import logo from '../utils/logo.png'
 
 // import { useUser } from "@clerk/clerk-react";
 // import { useState } from "react";
@@ -60,7 +60,7 @@ export async function buyCourse( products, user) {
             order_id:orderResponse.data.message.id,
             name:"Ecomzy",
             description: "Thank You for Purchasing our product",
-            // image:logo,
+            image:logo,
             prefill: {
                 name:`${user.firstName}`,
                 email:user.primaryEmailAddress?.emailAddress
