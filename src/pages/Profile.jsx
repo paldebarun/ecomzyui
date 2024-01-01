@@ -141,7 +141,7 @@ const Profile = ({orders}) => {
 
     </div>
 
-    <div className='w-6/12 xs:w-7/12 sm:w-8/12  '>
+    <div className={!orderspage ?'w-6/12 xs:w-7/12 sm:w-8/12  ':" "}>
     { profleInfo && (
       <Profileinfo />
     )
