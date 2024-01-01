@@ -17,12 +17,12 @@ import { buyCourse } from "../operations/paymentservice";
     const navigate=useNavigate();
     const [item,setitem]=useState(location.state.item);
     const [incart,setincart]=useState(location.state.incart);
-    const {cart} = useSelector((state) => state);
+    // const {cart} = useSelector((state) => state);
 
     const handleBuyproduct = () => {
         
       if(isSignedIn) {
-          buyCourse( cart, user);
+          buyCourse( [item], user);
           return;
       }
   }
