@@ -70,10 +70,14 @@ const Cart = () => {
     navigate("/product", { state: { item, incart:true } });
   };
 
-  const handleBuyproduct = () => {
+  const handleBuyproduct = async() => {
         
     if(isSignedIn) {
-        buyCourse( cart, user);
+        setloading(true);
+        buyCourse( cart, user,true);
+        
+       
+       setloading(false);
         return;
     }
 }

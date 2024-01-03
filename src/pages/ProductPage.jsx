@@ -22,7 +22,7 @@ import { buyCourse } from "../operations/paymentservice";
     const handleBuyproduct = () => {
         
       if(isSignedIn) {
-          buyCourse( [item], user);
+          buyCourse( [item], user,false);
           return;
       }
   }

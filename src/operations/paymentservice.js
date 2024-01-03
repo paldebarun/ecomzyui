@@ -23,10 +23,10 @@ function loadScript(src) {
 }
 
 
-export async function buyCourse( products, user) {
+export async function buyCourse( products, user,cartitem) {
     const toastId = toast.loading("Loading...");
     
-
+   
     // const [userId,setuserId]=useState(user.id);
 
     try{
@@ -69,7 +69,7 @@ export async function buyCourse( products, user) {
 
                 console.log("this is response of handler ",response);
             
-                verifyPayment({...response, products,user});
+                verifyPayment({...response, products,user,cartitem});
             }
         }
 
@@ -95,7 +95,9 @@ export async function buyCourse( products, user) {
 
 
 async function verifyPayment(bodyData) {
+
     
+
     console.log("this is body data",bodyData);
 
     const toastId = toast.loading("Verifying Payment....");
@@ -114,6 +116,11 @@ async function verifyPayment(bodyData) {
         if(!response.data.success) {
             throw new Error(response.data.message);
         }
+
+        if(bodyData.cartitem){
+            const response=await axios.post('https://ecomzyserver4.onrender.com/api/v1/erasecart',{user_id:bodyData.user.id});
+            console.log("this is clear cart response : ",response);
+        }
         toast.success("payment Successful, check your orders");
        
       
@@ -122,6 +129,9 @@ async function verifyPayment(bodyData) {
         console.log("PAYMENT VERIFY ERROR....", error);
         toast.error("Could not verify Payment");
     }
+    
     toast.dismiss(toastId);
+    
+    window.location.href='/home';
  
 }
